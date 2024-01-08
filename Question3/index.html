@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+    <div class="login-container">
+        <img src="./Screenshot 2024-01-08 154320.png" alt="Login Image">
+        <form class="login-form" onsubmit="validateForm(); return false;">
+            <input type="text" placeholder="Username (Email)" id="username" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="forgot-password">
+            <a href="#" onclick="sendResetEmail()">Forgot Password?</a>
+        </div>
+        <div id="error-message" class="error-message"></div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Validate username (email format)
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(username)) {
+                displayErrorMessage('Invalid email format');
+                return;
+            }
+
+            // Validate password
+            var passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?!.*[^A-Za-z0-9@]).*$/;
+            if (!passwordRegex.test(password)) {
+                displayErrorMessage('Invalid password format');
+                return;
+            }
+
+            // Check if the entered password is the specified one
+            if (password !== 'SmartServTest@123') {
+                displayErrorMessage('Incorrect password');
+                return;
+            }
+
+            // Redirect to the dashboard page
+            window.location.href = 'dashboard.html';
+        }
+
+        function sendResetEmail() {
+            // Open email client to send reset email
+            window.location.href = 'mailto:support@smartserv.io?subject=Password Reset';
+        }
+
+        function displayErrorMessage(message) {
+            var errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.innerHTML = message;
+        }
+    </script>
+</body>
+</html>
